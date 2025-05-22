@@ -60,10 +60,28 @@
     </div>
 
     <script>
+        const now = new Date();
+        const formattedTime = now.toLocaleString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+        });
         const commands = [
             {
+                cmd: "$ date",
+                response: `
+> ${formattedTime}
+                `,
+                delay: 50
+            },
+            {
                 cmd: "$ WHOAMI",
-                response: "> WELCOME WELCOME, MY NAME IS PEQIII，A POET BETWEEN 0 AND 1",
+                response: `
+>" WELCOME WELCOME, MY NAME IS PEQIII, A POET BETWEEN 0 AND 1"
+                `,
                 delay: 50
             },
             {
@@ -72,10 +90,10 @@
 > REAL NAME: YUJIA WEI , YOU CAN ALSO CALL ME PEQIII/Q1AN_W
 > NETEASY CLOUDMUSIC: STRAWBERRY_LIME
 > SKILLS: PYTHON | C/C++ | WEB SECURITY | REVERSE ENGINEERING
-> CURRENT DREAM: JUST IN MY MIND, AND I WON'T TELL TO ANYBODY
-> GITHUB: HTTPS://GITHUB.COM/PEQIII
+> CURRENT DREAM: JUST IN MY MIND, AND I WON'T TELL TO ANYONE
+> I USE ARCHLINUX BTW
                 `,
-                delay: 20
+                delay: 50
             },
             {
                 cmd: "$ find /interests/",
@@ -85,16 +103,16 @@
 > /interests/CTF
 > /interests/MUSIC
                 `,
-                delay: 20
+                delay: 50
             },
             {
                 cmd: "$ contact --social",
                 response: `
 > GITHUB: HTTPS://GITHUB.COM/PEQIII
-> Twitter: I DON'T HAVE THIS, MAY BE IN THE NEXT YEAR
-> Email: WEIYUJIAZHANGHU@HOTMAIL.COM
+> TWITTER: I DID'T HAVE THIS YET, MAY BE IN THE NEXT YEAR
+> EMAIL: weiyujiazhanghu@hotmail.com
                 `,
-                delay: 20
+                delay: 50
             }
         ];
 
