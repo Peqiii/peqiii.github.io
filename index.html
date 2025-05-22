@@ -1,7 +1,130 @@
-<p>Hello 大家好</p>
-<p>我是peqiii，这是我的个人网站。 </p>
-<p>很高兴你来到这里, 你可以在以下的网站找到我</p>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终端 | 自我介绍</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        #terminal {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #00ff00;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .command {
+            color: #00ff00;
+        }
+        .response {
+            margin-bottom: 15px;
+        }
+        .typed {
+            border-right: 2px solid #00ff00;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #00ff00; }
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <div>
+            <span class="command">$ whoami</span>
+            <div class="response typed" id="whoami"></div>
+        </div>
+        <div>
+            <span class="command">$ cat about.txt</span>
+            <div class="response" id="about">
+                <p>> 代号: 数字游民</p>
+                <p>> 职业: 全栈开发者/AI探索者</p>
+                <p>> 技能树: Python | JavaScript | Machine Learning</p>
+                <p>> 当前任务: 构建改变世界的数字工具</p>
+                <p>> 信仰: 技术应该让生活更美好</p>
+            </div>
+        </div>
+        <div>
+            <span class="command">$ find /interests/</span>
+            <div class="response" id="interests">
+                <p>> /interests/cyberpunk</p>
+                <p>> /interests/quantum_computing</p>
+                <p>> /interests/neural_networks</p>
+                <p>> /interests/electronic_music</p>
+            </div>
+        </div>
+        <div>
+            <span class="command">$ contact --social</span>
+            <div class="response" id="contact">
+                <p>> GitHub: github.com/yourusername</p>
+                <p>> Twitter: @yourhandle</p>
+                <p>> Email: yourname@protonmail.com</p>
+            </div>
+        </div>
+        <div>
+            <span class="command">$ _</span><span class="cursor"></span>
+        </div>
+    </div>
 
-<ul>
-    <li> <a href="https://github.com/Peqiii">我的GitHub</a> </li>
-</ul>
+    <script>
+        // 打字机效果
+        const whoamiText = "> 欢迎访问我的数字终端。我是[你的名字]，一个在0和1之间寻找诗意的技术诗人。";
+        let i = 0;
+        function typeWriter() {
+            if (i < whoamiText.length) {
+                document.getElementById("whoami").innerHTML += whoamiText.charAt(i);
+                i++;
+                setTimeout(typeWriter, Math.random() * 100 + 50);
+            }
+        }
+        
+        // 页面加载后开始动画
+        window.onload = function() {
+            typeWriter();
+            document.getElementById('about').style.display = 'none';
+            document.getElementById('interests').style.display = 'none';
+            document.getElementById('contact').style.display = 'none';
+            
+            // 模拟终端命令显示效果
+            setTimeout(() => {
+                document.getElementById('about').style.display = 'block';
+                document.getElementById('about').style.animation = "typing 3s steps(40, end)";
+            }, 3500);
+            
+            setTimeout(() => {
+                document.getElementById('interests').style.display = 'block';
+                document.getElementById('interests').style.animation = "typing 3s steps(40, end)";
+            }, 5500);
+            
+            setTimeout(() => {
+                document.getElementById('contact').style.display = 'block';
+                document.getElementById('contact').style.animation = "typing 3s steps(40, end)";
+            }, 7500);
+        };
+    </script>
+</body>
+</html>
