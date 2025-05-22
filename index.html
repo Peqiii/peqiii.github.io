@@ -248,10 +248,10 @@
         <div>
             <span class="command">$ find /interests/</span>
             <div class="response" id="interests">
-                <p>> /interests/cyberpunk</p>
-                <p>> /interests/quantum_computing</p>
-                <p>> /interests/neural_networks</p>
-                <p>> /interests/electronic_music</p>
+                <p>> /interests/CYBER SECURITY</p>
+                <p>> /interests/FPV </p>
+                <p>> /interests/CTF</p>
+                <p>> /interests/MUSCI</p>
             </div>
         </div>
         <div>
@@ -266,40 +266,55 @@
             <span class="command">$ _</span><span class="cursor"></span>
         </div>
     </div>
-
     <script>
-        const whoamiText = "> WELCOME WELCOME, MY NAME IS PEQIII，A POET BWTWEEN 0 AND 1";
-        let i = 0;
-        function typeWriter() {
-            if (i < whoamiText.length) {
-                document.getElementById("whoami").innerHTML += whoamiText.charAt(i);
-                i++;
-                setTimeout(typeWriter, Math.random() * 100 + 50);
+    const terminalLines = [
+        { id: "whoami", text: "> WELCOME WELCOME, MY NAME IS PEQIII，A POET BWTWEEN 0 AND 1"},
+        { id: "about", html: document.getElementById('about').innerHTML },
+        { id: "interests", html: document.getElementById('interests').innerHTML },
+        { id: "contact", html: document.getElementById('contact').innerHTML }
+    ];
+        
+    document.getElementById('about').innerHTML = '';
+    document.getElementById('interests').innerHTML = '';
+    document.getElementById('contact').innerHTML = '';
+
+    let currentLine = 0;
+    let charIndex = 0;
+
+    function typeWriter() {
+        if (currentLine >= terminalLines.length) return;
+
+        const line = terminalLines[currentLine];
+        const element = document.getElementById(line.id);
+
+        if (line.text) {
+            if (charIndex < line.text.length) {
+                element.innerHTML += line.text.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 50); 
+            } else {
+                currentLine++;
+                charIndex = 0;
+                setTimeout(typeWriter, 300);
+            }
+        } else if (line.html) {
+            if (charIndex < line.html.length) {
+                element.innerHTML += line.html.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 20); 
+            } else {
+                currentLine++;
+                charIndex = 0;
+                setTimeout(typeWriter, 300); 
             }
         }
-        
-        window.onload = function() {
-            typeWriter();
-            document.getElementById('about').style.display = 'none';
-            document.getElementById('interests').style.display = 'none';
-            document.getElementById('contact').style.display = 'none';
-            
-            setTimeout(() => {
-                document.getElementById('about').style.display = 'block';
-                document.getElementById('about').style.animation = "typing 3s steps(40, end)";
-            }, 3500);
-            
-            setTimeout(() => {
-                document.getElementById('interests').style.display = 'block';
-                document.getElementById('interests').style.animation = "typing 3s steps(40, end)";
-            }, 5500);
-            
-            setTimeout(() => {
-                document.getElementById('contact').style.display = 'block';
-                document.getElementById('contact').style.animation = "typing 3s steps(40, end)";
-            }, 7500);
-        };
+    }
+
+    window.onload = function() {
+        typeWriter();
+    };
     </script>
+   
     </div>
 </body>
 </html>
