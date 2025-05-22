@@ -20,7 +20,7 @@
         .cursor {
             display: inline-block;
             width: 20px;
-            height: 30px;
+            height: 30px;about.txt
             background-color: #00ff00;
             animation: blink 1s infinite;
             vertical-align: middle;
@@ -55,14 +55,14 @@
 <body>
     <div id="terminal">
         <div>
-            <span class="command">$ whoami</span>
+            <span class="command">$ WHOAMI</span>
             <div class="response typed" id="whoami"></div>
         </div>
         <div>
-            <span class="command">$ cat about.txt</span>
+            <span class="command">$ cat ABOUTME.txt</span>
             <div class="response" id="about">
                 <p>> REAL NAME: YUJIA WEI , YOU CAN ALSO CALL ME PEQIII/Q1AN_W</p>
-                <p>> </p>
+                <p>> NETEASY CLOUDMUSIC: STRAWBERRY_LIME</p>
                 <p>> SKILLS: PYTHON | C/C++ | WEB SECURITY | REVERSE ENGINEERING</p>
                 <p>> CURRENT DREAM: JUST IN MY MIND, AND I WON'T TELL TO ANYBODY</p>
                 <p>> GITHUB: HTTPS://GITHUB.COM/PEQIII</p>
@@ -91,8 +91,7 @@
     </div>
 
     <script>
-        // 打字机效果
-        const whoamiText = "> 欢迎访问我的数字终端。我是PEQIII，一个在0和1之间寻找诗意的技术诗人。";
+        const whoamiText = "> WELCOME WELCOME, MY NAME IS PEQIII，A POET BWTWEEN 0 AND 1";
         let i = 0;
         function typeWriter() {
             if (i < whoamiText.length) {
@@ -102,14 +101,12 @@
             }
         }
         
-        // 页面加载后开始动画
         window.onload = function() {
             typeWriter();
             document.getElementById('about').style.display = 'none';
             document.getElementById('interests').style.display = 'none';
             document.getElementById('contact').style.display = 'none';
             
-            // 模拟终端命令显示效果
             setTimeout(() => {
                 document.getElementById('about').style.display = 'block';
                 document.getElementById('about').style.animation = "typing 3s steps(40, end)";
