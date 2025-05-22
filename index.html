@@ -265,41 +265,92 @@
         <div>
             <span class="command">$ _</span><span class="cursor"></span>
         </div>
-    </div>
-   <script>
-        const whoamiText = "> WELCOME WELCOME, MY NAME IS PEQIII，A POET BWTWEEN 0 AND 1";
-        let i = 0;
-        function typeWriter() {
-            if (i < whoamiText.length) {
-                document.getElementById("whoami").innerHTML += whoamiText.charAt(i);
-                i++;
-                setTimeout(typeWriter, Math.random() * 100 + 50);
-            }
-        }
+        <script>
+            const commands = [
+                {
+                    cmd: "$ whoami",
+                    response: "> WELCOME WELCOME, MY NAME IS PEQIII，A POET BETWEEN 0 AND 1",
+                    targetId: "whoami",
+                    delay: 80
+                },
+                {
+                    cmd: "$ cat about.txt",
+                    response: document.getElementById('about').innerHTML,
+                    targetId: "about",
+                    delay: 20
+                },
+                {
+                    cmd: "$ find /interests/",
+                    response: document.getElementById('interests').innerHTML,
+                    targetId: "interests",
+                    delay: 20
+                },
+                {
+                    cmd: "$ contact --social",
+                    response: document.getElementById('contact').innerHTML,
+                    targetId: "contact",
+                    delay: 20
+                }
+            ];
         
-        window.onload = function() {
-            typeWriter();
-            document.getElementById('about').style.display = 'none';
-            document.getElementById('interests').style.display = 'none';
-            document.getElementById('contact').style.display = 'none';
-            
-            setTimeout(() => {
-                document.getElementById('about').style.display = 'block';
-                document.getElementById('about').style.animation = "typing 3s steps(40, end)";
-            }, 3500);
-            
-            setTimeout(() => {
-                document.getElementById('interests').style.display = 'block';
-                document.getElementById('interests').style.animation = "typing 3s steps(40, end)";
-            }, 5500);
-            
-            setTimeout(() => {
-                document.getElementById('contact').style.display = 'block';
-                document.getElementById('contact').style.animation = "typing 3s steps(40, end)";
-            }, 7500);
-        };
-    </script>
-   
+            // 清空内容区域
+            document.querySelectorAll('.response').forEach(el => el.innerHTML = '');
+        
+            let currentCmd = 0;
+            let currentChar = 0;
+            let isTypingCmd = true;
+            const terminal = document.getElementById('terminal');
+        
+            function typeWriter() {
+                if (currentCmd >= commands.length) return;
+        
+                const command = commands[currentCmd];
+                const cmdElement = document.createElement('div');
+                const responseElement = document.getElementById(command.targetId);
+        
+                if (isTypingCmd) {
+                    // 打字输入命令
+                    if (currentChar < command.cmd.length) {
+                        if (currentChar === 0) {
+                            cmdElement.className = 'command';
+                            terminal.appendChild(cmdElement);
+                        }
+                        cmdElement.textContent += command.cmd.charAt(currentChar);
+                        currentChar++;
+                        setTimeout(typeWriter, 50); // 命令输入速度
+                    } else {
+                        currentChar = 0;
+                        isTypingCmd = false;
+                        setTimeout(typeWriter, 300); // 命令输入完成后稍作停顿
+                    }
+                } else {
+                    // 打字显示响应内容
+                    if (currentChar < command.response.length) {
+                        if (currentChar === 0) {
+                            responseElement.style.display = 'block';
+                        }
+                        responseElement.innerHTML += command.response.charAt(currentChar);
+                        currentChar++;
+                        setTimeout(typeWriter, command.delay);
+                    } else {
+                        // 当前命令完成，转到下一个
+                        currentCmd++;
+                        currentChar = 0;
+                        isTypingCmd = true;
+                        setTimeout(typeWriter, 500); // 命令间停顿
+                    }
+                }
+            }
+        
+            window.onload = function() {
+                // 初始隐藏所有响应区域
+                document.querySelectorAll('.response').forEach(el => {
+                    el.style.display = 'none';
+                });
+                typeWriter();
+            };
+        </script>
+    </div> 
     </div>
 </body>
 </html>
