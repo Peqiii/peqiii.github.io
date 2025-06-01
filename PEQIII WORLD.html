@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WORLD OF PEQIII</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Press Start 2P', 'Courier New', monospace;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+        }
+        #terminal-container {
+            width: 90%;
+            max-width: 700px;
+        }
+        #terminal {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #00ff00;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .command {
+            color: #00ff00;
+        }
+        .response {
+            margin-bottom: 25px;
+            line-height: 1.8; 
+        }
+        .response p {
+            margin-bottom: 12px;
+        』
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal-container">
+        <div id="terminal">
+        </div>
+    </div>
+
+    <script>
+        const now = new Date();
+        const formattedTime = now.toLocaleString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+        });
+        const commands = [
+            {
+                cmd: "$ date",
+                response: `
+> ${formattedTime}
+                `,
+                delay: 50
+            },
+            {
+                cmd: "$ WHOAMI",
+                response: `
+>" WELCOME WELCOME, MY NAME IS PEQIII, A POET BETWEEN 0 AND 1"
+                `,
+                delay: 50
+            },
+            {
+                cmd: "$ cat ABOUTME.txt",
+                response: `
+> REAL NAME: YUJIA WEI , YOU CAN ALSO CALL ME PEQIII/Q1AN_W
+> NETEASY CLOUDMUSIC: STRAWBERRY_LIME
+> SKILLS: PYTHON | C/C++ | WEB SECURITY | REVERSE ENGINEERING
+> CURRENT DREAM: JUST IN MY MIND, AND I WON'T TELL TO ANYONE
+> I USE ARCHLINUX BTW
+                `,
+                delay: 50
+            },
+            {
+                cmd: "$ cat PROJECT EXPERIENCE.txt",
+                response: `
+> DEVICE PORT SCANNER(C++, QT CREATER)
+> APESS(SWITCH NETWORK SNIFFER SYSTEM, PYTHON, QT FOR PYTHON)
+> 2024 HVV(CHINA CYBERSECURITY ACTION, CHINA RESOURCE COMPANY, BRJING)
+                `,
+                delay: 50
+            },
+            {
+                cmd: "$ find /interests/",
+                response: `
+> /interests/CYBER SECURITY
+> /interests/FPV
+> /interests/CTF
+> /interests/MUSIC
+                `,
+                delay: 50
+            },
+            {
+                cmd: "$ contact --social",
+                response: `
+> GITHUB: HTTPS://GITHUB.COM/PEQIII
+> TWITTER: I DID'T HAVE THIS YET, MAY BE IN THE NEXT YEAR
+> EMAIL: weiyujiazhanghu@hotmail.com
+                `,
+                delay: 50
+            }
+        ];
+
+        const terminal = document.getElementById('terminal');
+        let currentCommand = 0;
+        let currentStep = 'command';
+        let currentChar = 0;
+        let currentElement = null;
+
+        function typeWriter() {
+            if (currentCommand >= commands.length) {
+                terminal.innerHTML += `<div><span class="command">$ _</span><span class="cursor"></span></div>`;
+                return;
+            }
+
+            const command = commands[currentCommand];
+
+            if (currentStep === 'command') {
+                if (currentChar === 0) {
+                    currentElement = document.createElement('div');
+                    const cmdElement = document.createElement('span');
+                    cmdElement.className = 'command';
+                    currentElement.appendChild(cmdElement);
+                    terminal.appendChild(currentElement);
+                }
+
+                if (currentChar < command.cmd.length) {
+                    currentElement.querySelector('.command').textContent += command.cmd.charAt(currentChar);
+                    currentChar++;
+                    setTimeout(typeWriter, 50);
+                } else {
+                    currentStep = 'response';
+                    currentChar = 0;
+                    const responseElement = document.createElement('div');
+                    responseElement.className = 'response';
+                    currentElement.appendChild(responseElement);
+                    setTimeout(typeWriter, 300);
+                }
+            } else {
+                const responseElement = currentElement.querySelector('.response');
+                
+                if (currentChar < command.response.length) {
+                    responseElement.textContent += command.response.charAt(currentChar);
+                    currentChar++;
+                    setTimeout(typeWriter, command.delay);
+                } else {
+                    currentCommand++;
+                    currentStep = 'command';
+                    currentChar = 0;
+                    setTimeout(typeWriter, 500);
+                }
+            }
+        }
+
+        window.onload = function() {
+            typeWriter();
+        };
+    </script>
+</body>
+</html>
